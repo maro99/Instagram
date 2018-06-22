@@ -22,8 +22,10 @@ from django.shortcuts import render
 
 def post_list(request):
 
-    return HttpResponse( 'post-list')
+    #return HttpResponse( 'post-list')
+    return render(request,'post_list.html')
 
 def post_detail(request,pk):
 
-    return HttpResponse('post-detail')
+    #return HttpResponse('post-detail')
+    return render(request,'post_detail.html')
