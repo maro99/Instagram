@@ -1,9 +1,10 @@
 from django.http import HttpResponse
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
 
 #post_list(request)
+    # /posts/
 #post_detail(request, pk) <_ view parameter 및 path 패턴명에 pk 사용
+    # /posts/3/
 
 #구현하세요
 #base.html기준으로.
@@ -17,15 +18,26 @@ from django.shortcuts import render
 #2. view 에서 template을 렌더링 하는 기능 추가
 #3. templates에서 QuerySet 또는 objects를 사용해서 객체 출력
 #4. template에 extend 사용
+from .models import Post
 
 
 
 def post_list(request):
 
-    #return HttpResponse( 'post-list')
-    return render(request,'post_list.html')
+    posts =Post.objects.all()
+    context={
+        'posts': posts
+    }
 
-def post_detail(request,pk):
+    # return HttpResponse( 'post-list')
+    return render(request,'posts/post_list.html',context)
 
-    #return HttpResponse('post-detail')
-    return render(request,'post_detail.html')
+
+
+def post_detail(request, pk):
+    post = Post.objects.get(pk=pk)
+    context = {
+        'post': post,
+    }
+    return render(request, 'posts/post_detail.html', context)
+
