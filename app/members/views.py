@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -48,9 +49,23 @@ def login_view(request):
 
 def logout_view(request):
     if request.method =='POST':
+
         logout(request)
         return redirect('posts:post-list')
     else:
         return redirect('posts:post-list')
 
 
+def signin_view(request):
+
+
+    if request.method =='POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        user = User.objects.create_user(username ,email, password)
+        login(request, user)
+
+        return redirect('posts:post-list')
+    else:
+        return render(request, 'members/signup.html')
