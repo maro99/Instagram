@@ -200,11 +200,37 @@ def signup(request):
         # print(locals())  ---> 스코프 안의 변수들 나타냄.
 
 
-        required_fields = ['username','email','password','password2']
+        # required_fields = ['username','email','password','password2']
+        #
+        # for filed_name in required_fields:
+        #     if not locals()[filed_name]:
+        #         context['errors'].append('{}을(를) 체워주세요'.format(filed_name))
 
-        for filed_name in required_fields:
-            if not locals()[filed_name]:
-                context['errors'].append('{}을(를) 체워주세요'.format(filed_name))
+
+        #for문 에서 if문 없이 친절하게 한글로 error문을 context에 넣어주자.requritefields-->dict
+
+        # required_fields = {'username':'유저이름','email':'이메일','password':'페스워드','password2':'패스워드2'}
+        required_fields = {'username':
+                               {'verbose_name':'유저이름'},
+                           'email':
+                               {'verbose_name': '이메일 '},
+                           'password':
+                               {'verbose_name': '비밀번호1'},
+                           'password2':
+                               {'verbose_name': '비밀번호2'},
+                           }
+
+
+        for field_name in required_fields:
+            if not locals()[field_name]:
+                context['errors'].append('{}을(를) 체워주세요'.format(
+                    required_fields[field_name]['verbose_name']
+                ))
+
+
+
+
+
 
 
         # 입력데이터 채워넣기
