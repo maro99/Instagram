@@ -5,15 +5,45 @@
 {% block content %}
 
 
+
+
 <div>
-    <form action="" method="POST">
-        {% csrf_token %}
-        <input type="id" name = "username">
-        <!--<input type="email" name = "email">-->
-        <input type="password" name = "password">
-        <button type="submit">signup</button>
-    </form>
+
+    {% if errors %}
+
+        <ul>
+            {% for error in errors %}
+            <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div><label>username<input type="username" name="username"></label></div>
+            <div><label>email<input type="email" name="email"></label></div>
+            <div><label>password<input type="password" name="password"></label></div>
+
+            <button type="submit">signup</button>
+        </form>
+
+    {% else %}
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div><label>username<input type="username" name="username"></label></div>
+            <div><label>email<input type="email" name="email"></label></div>
+            <div><label>password<input type="password" name="password"></label></div>
+
+            <button type="submit">signup</button>
+        </form>
+
+
+    {% endif %}
+
+
+
 </div>
+
+
 
 
 {% endblock %}

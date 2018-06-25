@@ -78,17 +78,31 @@ def signup(request):
 
     if request.method == 'POST':
 
+
         username = request.POST['username']
+        email = request.POST['email']
         password = request.POST['password']
+
         # exist를 사용해서  유저가 이미 존재하면 signup으로 다시 redirect
         # 존재하지 않는 경우에만 아래 로직 실행.
-
         if User.objects.filter(username=username).exists():
-            return redirect('members:signup')
-        else:
-            user = User.objects.create_user(username = username , password = password)
+            # 단순 redirect가 아니라 render를 사용.
+            # render에 context를 전달
+            #   context로 사용할 dict 객체의
+            #       'errors' 키에 List를 할당하고 해당 리스트에
+            #          '유저가이미존재함' 문자열을 추가해서 전달.
+            #   탬플릿에서는 전달받은 errors를 순회하며 애러메시지를 출력
 
 
+            context={
+                'errors':[],
+            }
+
+            context['errors'].append('유저가이미존재')
+
+            return render(request,'members/signup.html', context)
+
+        user = User.objects.create_user(username = username , email = email, password = password)
         login(request, user)
         return redirect('index')
 
