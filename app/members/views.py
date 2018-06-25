@@ -271,6 +271,7 @@ def signup(request):
     #       결과 확인 후 <form>안에 넣는다.
     # GET 방식 요청에 대해 적절한 render 처리
 
+
     form =SignupForm()
 
     context = {'form':form}
