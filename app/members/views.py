@@ -165,10 +165,7 @@ def logout_view(request):
     # post요청 오면~ error존제시 아래에서 render를 사고 싶다.
 
 
-
-
-
-def signup(request):
+def signup_bak(request):
     context = {
         'errors': [],
     }
@@ -258,3 +255,10 @@ def signup(request):
 
 
 
+# form에서 지금까지 것들 이뤄지는데 장고 Forms~에서 지원하는 것이다.
+# Form 문서를 봐라 --->문서타고간것 동영상 참고.
+
+
+def signup(request):
+    # GET 방식 요청에 대해 적절한 render 처리
+    pass
