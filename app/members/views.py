@@ -96,14 +96,17 @@ def signup(request):
 
             context={
                 'errors':[],
+                'username':username,
+                'email':email,
+                'password':password,
             }
 
             context['errors'].append('유저가이미존재')
 
             return render(request,'members/signup.html', context)
-
-        user = User.objects.create_user(username = username , email = email, password = password)
-        login(request, user)
+        else:
+            user = User.objects.create_user(username = username , email = email, password = password)
+            login(request, user)
         return redirect('index')
 
     else:
