@@ -74,40 +74,130 @@ def logout_view(request):
 #Foreignkey에 User모델을 지정할 때는 settings.AUTH_USER_MODEL
 # User.get_user_model()
 
-def signup(request):
+# def signup(request):
+#
+#     if request.method == 'POST':
+#
+#
+#         username = request.POST['username']
+#         email = request.POST['email']
+#         password = request.POST['password']
+#         password2 = request.POST['password2']
 
-    if request.method == 'POST':
+        # 2번째 검사로, password와 password2가 같은지 검사
+        # 다를경우 해당 오류를 출력
+        #
+        # username 도 이미 존재하고 password도 다를 경우 둘다 출력
 
-
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
 
         # exist를 사용해서  유저가 이미 존재하면 signup으로 다시 redirect
         # 존재하지 않는 경우에만 아래 로직 실행.
+
+        # if password != password2:
+        #     context['erros'].append('password와 password2가 같지않다.')
+
+    #  내가한 부분)
+    #     if User.objects.filter(username=username).exists() or password != password2:
+    #         # 단순 redirect가 아니라 render를 사용.
+    #         # render에 context를 전달
+    #         #   context로 사용할 dict 객체의
+    #         #       'errors' 키에 List를 할당하고 해당 리스트에
+    #         #          '유저가이미존재함' 문자열을 추가해서 전달.
+    #         #   탬플릿에서는 전달받은 errors를 순회하며 애러메시지를 출력
+    #
+    #
+    #         context={
+    #             'errors':[],
+    #             'username':username,
+    #             'email':email,
+    #             'password':password,
+    #         }
+    #
+    #         if User.objects.filter(username=username).exists():
+    #             context['errors'].append('유저가이미존재')
+    #
+    #         if password != password2:
+    #             context['errors'].append('password와 password2가 같지않다.')
+    #
+    #         return render(request,'members/signup.html', context)
+    #     else:
+    #         user = User.objects.create_user(username = username , email = email, password = password)
+    #         login(request, user)
+    #         return redirect('index')
+    #
+    # else:
+    #     return render(request, 'members/signup.html')
+    #
+    #
+
+        #     context={
+    #         'errors':[],
+    #         'username':username,
+    #         'email':email,
+    #         'password':password,
+    #     }
+    #
+    #     if User.objects.filter(username=username).exists():
+    #         context['errors'].append('유저가이미존재')
+    #
+    #     if password != password2:
+    #         context['errors'].append('password와 password2가 같지않다.')
+    #
+    #     if context['errors']:
+    #         return render(request,'members/signup.html', context)#@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    #
+    #     else:
+    #         user = User.objects.create_user(username = username , email = email, password = password)
+    #         login(request, user)
+    #         return redirect('index')
+    #
+    # else:
+    #     return render(request, 'members/signup.html')#@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
+
+
+
+
+
+    # 중복 없에봄. return render 위아래 합치고 싶다.
+    # post요청 오면~ error존제시 아래에서 render를 사고 싶다.
+
+
+
+
+
+def signup(request):
+    context = {
+        'errors': [],
+    }
+    if request.method == 'POST':
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+
+        # 입력데이터 채워넣기
+        context['username'] = username
+        context['email'] = email
+
+        # form에서 전송된 데이터들이 올바른지 검사
         if User.objects.filter(username=username).exists():
-            # 단순 redirect가 아니라 render를 사용.
-            # render에 context를 전달
-            #   context로 사용할 dict 객체의
-            #       'errors' 키에 List를 할당하고 해당 리스트에
-            #          '유저가이미존재함' 문자열을 추가해서 전달.
-            #   탬플릿에서는 전달받은 errors를 순회하며 애러메시지를 출력
+            context['errors'].append('유저가 이미 존재함')
+        if password != password2:
+            context['errors'].append('패스워드가 일치하지 않음')
 
-
-            context={
-                'errors':[],
-                'username':username,
-                'email':email,
-                'password':password,
-            }
-
-            context['errors'].append('유저가이미존재')
-
-            return render(request,'members/signup.html', context)
-        else:
-            user = User.objects.create_user(username = username , email = email, password = password)
+        # errors가 없으면 유저 생성 루틴 실행
+        if not context['errors']:
+            user = User.objects.create_user(
+                username=username,
+                password=password,
+                email=email,
+            )
             login(request, user)
-        return redirect('index')
+            return redirect('index')
+    return render(request, 'members/signup.html', context)
 
-    else:
-        return render(request, 'members/signup.html')
+
+

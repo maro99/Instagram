@@ -17,28 +17,17 @@
             {% endfor %}
         </ul>
 
+
+    {% endif %}
         <form action="" method="POST">
             {% csrf_token %}
             <div><label>username<input type="username" name="username" value ={{ username }}></label></div>
             <div><label>email<input type="email" name="email" value ={{ email }}></label></div>
             <div><label>password<input type="password" name="password" value ={{ password }}></label></div>
+            <div><label>password2<input type="password2" name="password2"></label></div>
 
             <button type="submit">signup</button>
         </form>
-
-    {% else %}
-        <form action="" method="POST">
-            {% csrf_token %}
-            <div><label>username<input type="username" name="username"></label></div>
-            <div><label>email<input type="email" name="email"></label></div>
-            <div><label>password<input type="password" name="password"></label></div>
-
-            <button type="submit">signup</button>
-        </form>
-
-
-    {% endif %}
-
 
 
 </div>
