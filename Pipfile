@@ -6,8 +6,11 @@ name = "pypi"
 [packages]
 django = "*"
 pillow = "*"
+ipython = "*"
 
 [dev-packages]
+django-extensions = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.6"

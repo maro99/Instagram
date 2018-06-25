@@ -77,13 +77,19 @@ def logout_view(request):
 def signup(request):
 
     if request.method == 'POST':
-        # exist를 사용해서  유저가 이미 존재하면 render로 넘어가고
+
         username = request.POST['username']
         password = request.POST['password']
+        # exist를 사용해서  유저가 이미 존재하면 signup으로 다시 redirect
+        # 존재하지 않는 경우에만 아래 로직 실행.
 
-        user = User.objects.create_user(username = username , password = password)
+        if User.objects.filter(username=username).exists():
+            return redirect('members:signup')
+        else:
+            user = User.objects.create_user(username = username , password = password)
+
+
         login(request, user)
-
         return redirect('index')
 
     else:
