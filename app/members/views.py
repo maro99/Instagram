@@ -173,16 +173,47 @@ def signup(request):
         'errors': [],
     }
     if request.method == 'POST':
+
+        # username, email, password, password2에 대해서
+        # 입력되지 않은 필드에 대한 오류를 추가
+
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
         password2 = request.POST['password2']
+
+
+        # if not username:
+        #     context['errors'].append('usname 입력 안됨')
+        # if not email:
+        #     context['errors'].append('email 입력 안됨.')
+        # if not password:
+        #     context['errors'].append('password 입력 안됨')
+        # if not password2:
+        #     context['errors'].append('password2 입력 안됨')
+
+
+        #for 문으로 작동하도록 수정
+        #locals()사용해라.
+        # 일단은 이렇게 하면 되지만 맘에 안든다.
+        # for문으로 하고싶다. 필요한 필드들만 검사하고 싶다.
+        # print(locals())  ---> 스코프 안의 변수들 나타냄.
+
+
+        required_fields = ['username','email','password','password2']
+
+        for filed_name in required_fields:
+            if not locals()[filed_name]:
+                context['errors'].append('{}을(를) 체워주세요'.format(filed_name))
+
 
         # 입력데이터 채워넣기
         context['username'] = username
         context['email'] = email
 
         # form에서 전송된 데이터들이 올바른지 검사
+
+
         if User.objects.filter(username=username).exists():
             context['errors'].append('유저가 이미 존재함')
         if password != password2:
