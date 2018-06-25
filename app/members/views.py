@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 
 
 # Create your views here.
+from members.forms import SignupForm
 
 
 def login_view(request):
@@ -258,7 +259,24 @@ def signup_bak(request):
 # form에서 지금까지 것들 이뤄지는데 장고 Forms~에서 지원하는 것이다.
 # Form 문서를 봐라 --->문서타고간것 동영상 참고.
 
+from members.forms import SignupForm
 
 def signup(request):
+
+    # 1. SignuoForm을 구성
+    #  usename, email, passwordm password2
+    # 2. 이 view에 SignuoForm 인스턴스 생성
+    # 3. context로 위에서 만든 인스턴스 전달
+    # 4. template에서 전달받은 인스턴스를 변수로 출력
+    #       결과 확인 후 <form>안에 넣는다.
     # GET 방식 요청에 대해 적절한 render 처리
+
+    form =SignupForm()
+
+    context = {'form':form}
+
+
+    return render(request, 'members/signup.html', context)
+
+
     pass
