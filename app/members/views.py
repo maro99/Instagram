@@ -56,16 +56,35 @@ def logout_view(request):
         return redirect('posts:post-list')
 
 
-def signin_view(request):
+# def signup_view(request):
+#
+#
+#     if request.method =='POST':
+#         username = request.POST['username']
+#         email = request.POST['email']
+#         password = request.POST['password']
+#         user = User.objects.create_user(username ,email, password)
+#         login(request, user)
+#
+#         return redirect('posts:post-list')
+#     else:
+#         return render(request, 'members/signup.html')
 
+#User 클래스를 가져올때는 get_user_model()
+#Foreignkey에 User모델을 지정할 때는 settings.AUTH_USER_MODEL
+# User.get_user_model()
 
-    if request.method =='POST':
+def signup(request):
+
+    if request.method == 'POST':
+        # exist를 사용해서  유저가 이미 존재하면 render로 넘어가고
         username = request.POST['username']
-        email = request.POST['email']
         password = request.POST['password']
-        user = User.objects.create_user(username ,email, password)
+
+        user = User.objects.create_user(username = username , password = password)
         login(request, user)
 
-        return redirect('posts:post-list')
+        return redirect('index')
+
     else:
         return render(request, 'members/signup.html')

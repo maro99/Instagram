@@ -25,7 +25,7 @@ urlpatterns = [
     path('posts/', include('posts.urls')),
 
     path('members/',include('members.urls')),
-    path('', views.index),
+    path('', views.index, name='index'),
 
    # path('media/' )
 ] + static(
