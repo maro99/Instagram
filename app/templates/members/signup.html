@@ -3,11 +3,18 @@
 {% block content %}
 
 <div>
-    <form action="POST">
+
+
+        {{ form.username.errors }}
+        {{ form.password.errors }}
+
+
+    <form action="" method="POST">
+
 
         {% csrf_token %}
-        {% for field in form%}
-        <div>
+        {% for field in form %}
+        <div clsss="form-group">
             <label for="{{field.id_for_label}}">{{ field.label }}</label>
             {{field}}
         </div>

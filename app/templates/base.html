@@ -11,35 +11,34 @@
 </head>
 <body>
 
+<div class="container">
     <h2>Instagram</h2>
 
     <!--user가 인증되어있으면 '로그아웃하기' 라는 링크를 보여주고 아니면 '로그인하기' 링크 보여주기 -->
 
 
     <!--logout_view를 구현-->
-        <!--request.method가 POST일 경우,-->
-        <!--request.user를 로그아웃시킴-->
+    <!--request.method가 POST일 경우,-->
+    <!--request.user를 로그아웃시킴-->
 
     <!--URL: /members/logout/-->
     <!--view: members.views.logout_view-->
     <!--로그아웃 완료 후에는 index 로 redirect-->
 
 
-
-
     <div>
         {% if user.is_authenticated %}
-
-            <form action="{% url 'members:logout' %}" method="POST">
-                   {% csrf_token %}
-                    <button type="submit">
-                        로그아웃하기
-                    </button>
-            </form>
+        <span>{{user}}로 로그인 중</span>
+        <form action="{% url 'members:logout' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">
+                로그아웃하기
+            </button>
+        </form>
 
         {% else %}
-            <a href="{% url 'members:login' %}">로그인하기</a>
-            <a href="{% url 'members:signup' %}">signin</a>
+        <a href="{% url 'members:login' %}">로그인하기</a>
+        <a href="{% url 'members:signup' %}">signin</a>
         {% endif %}
     </div>
     <div>
@@ -48,6 +47,7 @@
         {% endblock %}
 
     </div>
+</div>
 
 </body>
 </html>

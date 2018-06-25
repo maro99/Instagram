@@ -1,8 +1,11 @@
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout, get_user_model
+
+
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+
+User = get_user_model()
 
 
 # Create your views here.
@@ -263,21 +266,41 @@ from members.forms import SignupForm
 
 def signup(request):
 
-    # 1. SignuoForm을 구성
-    #  usename, email, passwordm password2
-    # 2. 이 view에 SignuoForm 인스턴스 생성
-    # 3. context로 위에서 만든 인스턴스 전달
-    # 4. template에서 전달받은 인스턴스를 변수로 출력
-    #       결과 확인 후 <form>안에 넣는다.
-    # GET 방식 요청에 대해 적절한 render 처리
+    if request.method == 'POST':
+
+        form = SignupForm(request.POST)
+
+        # form에 들어있는 데이터가 유효한지 검사.(해당 form 클래스에서 정의한 데이터 형식에서 벋어나지 않는지 판단.)
+        if form.is_valid():
+            # 유효할 경우 유저 생성 및 redirect
+            # username 존재하는지
+            # password, password2 같은지 추가로 검사헤 줘야함.
+
+            # is_vaild()가 True를 반환하면 유효성이 검사 된 양식 데이터는 form.clened_data사전에 저장된다.
+            username = form.cleaned_data['username']
+            email =  form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            #password2 = form.cleaned_data['password2']
+
+            user=User.objects.create_user(
+                username=username,
+                email=email,
+                password=password,
+            )
+
+            login(request,user)
+            return redirect('index')
+
+        else:
+            # result = '\n'.join(['{}:{}'.format(key,value) for key, value in form.errors.items()])
+            # return HttpResponse(result)
+            context = {'form': form, }
+            return render(request, 'members/signup.html', context)
 
 
-    form =SignupForm()
-
-    context = {'form':form}
-
-
-    return render(request, 'members/signup.html', context)
+    else:
+        form = SignupForm()
+        context = {'form': form,}
+        return render(request, 'members/signup.html', context)
 
 
-    pass
