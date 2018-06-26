@@ -5,19 +5,17 @@
 <div>
 
 
-        {{ form.username.errors }}
-
-        {{  form.non_field_errors }}
 
 
     <form action="" method="POST">
 
-
+        {{  form.non_field_errors }}
         {% csrf_token %}
         {% for field in form %}
         <div clsss="form-group">
             <label for="{{field.id_for_label}}">{{ field.label }}</label>
             {{field}}
+            {{field.errors}}
         </div>
         {% endfor %}
         <button type="submit">회원가입</button>
