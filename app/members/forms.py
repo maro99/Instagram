@@ -75,18 +75,18 @@ class SignupForm(forms.Form):
         password2 = self.cleaned_data.get('password2')
 
 
-        if password != password2:
-            raise ValidationError('비밀번호와 비밀번호확인값일치 안함.')
-
-        return self.cleaned_data
-
-
         # if password != password2:
+        #     raise ValidationError('비밀번호와 비밀번호확인값일치 안함.')
         #
-        #     msg = "비밀번호 두개가 불일치 합니다."
-        #
-        #     self.add_error('password',msg)
-        #     self.add_error('password2',msg)
+        # return self.cleaned_data
+
+
+        if password != password2:
+
+            msg = "비밀번호 두개가 불일치 합니다."
+
+            self.add_error('password',msg)
+            # self.add_error('password2',msg)
 
 
     def signup(self):
