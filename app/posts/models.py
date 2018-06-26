@@ -14,7 +14,7 @@ from django.db import models
 class Post(models.Model):
     author =models.ForeignKey(settings.AUTH_USER_MODEL,on_delete= models.CASCADE)
 
-    photo = models.ImageField(upload_to= 'post',blank=True) #이미지필드는 파일필드 상속 받음. 추가로 가로세로정보 들어감.
+    photo = models.ImageField(upload_to= 'post', blank=True) #이미지필드는 파일필드 상속 받음. 추가로 가로세로정보 들어감.
                                                             # 어디로 갈지 upload_to 설정함.
     content = models.TextField(blank =True)
     created_at = models.DateTimeField(auto_now_add=True)
