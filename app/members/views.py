@@ -277,25 +277,28 @@ def signup(request):
             # password, password2 같은지 추가로 검사헤 줘야함.
 
             # is_vaild()가 True를 반환하면 유효성이 검사 된 양식 데이터는 form.clened_data사전에 저장된다.
-            username = form.cleaned_data['username']
-            email =  form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            #password2 = form.cleaned_data['password2']
+            # username = form.cleaned_data['username']
+            # email =  form.cleaned_data['email']
+            # password = form.cleaned_data['password']
+            #
+            # user=User.objects.create_user(
+            #     username=username,
+            #     email=email,
+            #     password=password,
+            # )
 
-            user=User.objects.create_user(
-                username=username,
-                email=email,
-                password=password,
-            )
+            # 위의 내용들을 아래에 다 담아버리자.
+
+            user = form.signup() #signup 메소드는 form의 메소드 인데 form은 signupForm클래스의 인스턴스이다.
 
             login(request,user)
             return redirect('index')
 
         else:
-            # result = '\n'.join(['{}:{}'.format(key,value) for key, value in form.errors.items()])
-            # return HttpResponse(result)
-            context = {'form': form, }
-            return render(request, 'members/signup.html', context)
+            result = '\n'.join(['{}:{}'.format(key,value) for key, value in form.errors.items()])
+            return HttpResponse(result)
+            # context = {'form': form, }
+            # return render(request, 'members/signup.html', context)
 
 
     else:

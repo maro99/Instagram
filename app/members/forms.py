@@ -1,7 +1,9 @@
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+# from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
+User=get_user_model()
 
 class SignupForm(forms.Form):
     username = forms.CharField(
@@ -53,55 +55,13 @@ class SignupForm(forms.Form):
         # 원하는결과는, 중복되지 않는 username을 사용하면 유저 생성
         # 중복된 username을 입력하면 오류목록이 출력(자동)
 
+        #username field의 clean() 실행결곽가 self.cleaned_data['username']에 있음
         data = self.cleaned_data['username']
 
         if User.objects.filter(username=data).exists():
             raise forms.ValidationError('같은 아이디가 존재한다.')
 
         return data
-
-    # def claen_pasword1(self):
-    #
-    #     password1_data = self.cleaned_data['password']
-    #     password2_data = self.cleaned_data['password2']
-    #
-    #     if password_data != password2_data:
-    #         raise ValidationError('두 비밀번호가 일치하지 않는다.')
-    #
-    #     return password_data
-
-
-
-#clean() 매소드에 변화 안줬을때 기본 반환 값은 무엇인가?
-# 1. 우리의 from이 상속받은 부모클래스가 clean()메소드 반환값에 cleaned_data dict이 없는경우.
-# 2. 우리의 from이 상속받은 부모클래스가 clean()메소드 반환값이  cleaned_data dict인 경우.
-
-# 1
-#     def clean(self):
-#         super().clean()
-#         password = self.cleaned_data.get('password')
-#         password2 = self.cleaned_data.get('password2')
-#
-#
-#         if password != password2:
-#             raise forms.ValidationError(
-#                 "비밀번호 두개가 불일치 합니다."
-#             )
-
-
-# 2
-#     def clean(self):
-#         cleaned_data = super().clean()
-#         password = cleaned_data.get('password')
-#         password2 = cleaned_data.get('password2')
-#
-#         if password != password2:
-#             raise forms.ValidationError(
-#                 "비밀번호 두개가 불일치 합니다."
-#             )
-#
-#             # self.add_error()
-
 
 
 #form의 에러와 field에러가 다르다.from
@@ -116,8 +76,28 @@ class SignupForm(forms.Form):
 
 
         if password != password2:
+            raise ValidationError('비밀번호와 비밀번호확인값일치 안함.')
 
-            msg = "비밀번호 두개가 불일치 합니다."
+        return self.cleaned_data
 
-            self.add_error('password',msg)
-            self.add_error('password2',msg)
+
+        # if password != password2:
+        #
+        #     msg = "비밀번호 두개가 불일치 합니다."
+        #
+        #     self.add_error('password',msg)
+        #     self.add_error('password2',msg)
+
+
+    def signup(self):
+        username = self.cleaned_data['username']
+        email =  self.cleaned_data['email']
+        password = self.cleaned_data['password']
+
+        user=User.objects.create_user(
+            username=username,
+            email=email,
+            password=password,
+        )
+
+        return user
