@@ -278,22 +278,9 @@ def signup(request):
             login(request,user)
             return redirect('index')
 
-
-        # form.is_valid()를 통과하지 못한 경우에도
-        #   해당 form을 context를 사용해서 template으로 전달하고
-        #   template에서는 form이 가진 각 field의 error를 출력한다.
-
-        else:
-            # result = '\n'.join(['{}:{}'.format(key,value) for key, value in form.errors.items()])
-            # return HttpResponse(result)
-            context = {'form': form, }
-            # return render(request, 'members/signup.html', context)
-
-
     else:
         form = SignupForm()
-        context = {'form': form,}
-        # return render(request, 'members/signup.html', context)
 
+    context = {'form': form, }
     return render(request, 'members/signup.html', context)
 
