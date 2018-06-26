@@ -42,6 +42,8 @@
         <a href="{% url 'members:login' %}">로그인하기</a>
         <a href="{% url 'members:signup' %}">signin</a>
         {% endif %}
+        <a href="{% url 'posts:post-create' %}">글 작성</a>
+
     </div>
     <div>
         {% block content %}
