@@ -17,6 +17,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 
+AUTH_USER_MODEL = 'members.User'
+
 print(BASE_DIR)
 print('MEDIA_ROOT:', MEDIA_ROOT)
 print('TEMPLATE_DIR', TEMPLATE_DIR)
@@ -47,6 +49,7 @@ INSTALLED_APPS = [
     'django_extensions',
 
     'posts.apps.PostsConfig',
+    'members.apps.MembersConfig',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'config.urls'
