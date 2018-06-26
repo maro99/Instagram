@@ -272,38 +272,28 @@ def signup(request):
 
         # form에 들어있는 데이터가 유효한지 검사.(해당 form 클래스에서 정의한 데이터 형식에서 벋어나지 않는지 판단.)
         if form.is_valid():
-            # 유효할 경우 유저 생성 및 redirect
-            # username 존재하는지
-            # password, password2 같은지 추가로 검사헤 줘야함.
-
-            # is_vaild()가 True를 반환하면 유효성이 검사 된 양식 데이터는 form.clened_data사전에 저장된다.
-            # username = form.cleaned_data['username']
-            # email =  form.cleaned_data['email']
-            # password = form.cleaned_data['password']
-            #
-            # user=User.objects.create_user(
-            #     username=username,
-            #     email=email,
-            #     password=password,
-            # )
-
-            # 위의 내용들을 아래에 다 담아버리자.
 
             user = form.signup() #signup 메소드는 form의 메소드 인데 form은 signupForm클래스의 인스턴스이다.
 
             login(request,user)
             return redirect('index')
 
+
+        # form.is_valid()를 통과하지 못한 경우에도
+        #   해당 form을 context를 사용해서 template으로 전달하고
+        #   template에서는 form이 가진 각 field의 error를 출력한다.
+
         else:
-            result = '\n'.join(['{}:{}'.format(key,value) for key, value in form.errors.items()])
-            return HttpResponse(result)
-            # context = {'form': form, }
+            # result = '\n'.join(['{}:{}'.format(key,value) for key, value in form.errors.items()])
+            # return HttpResponse(result)
+            context = {'form': form, }
             # return render(request, 'members/signup.html', context)
 
 
     else:
         form = SignupForm()
         context = {'form': form,}
-        return render(request, 'members/signup.html', context)
+        # return render(request, 'members/signup.html', context)
 
+    return render(request, 'members/signup.html', context)
 
