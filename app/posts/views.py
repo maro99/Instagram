@@ -64,8 +64,8 @@ def post_create(request):
 
         if form.is_valid():
             user_input = request.user
-            post = form.create_post(user_input)
-            return HttpResponse('Post created')
+            form.create_post(user_input)
+            return redirect('posts:post-list')
 
     else:
         form = PostForm()
