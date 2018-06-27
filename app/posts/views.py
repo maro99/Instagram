@@ -26,9 +26,11 @@ from .models import Post
 
 def post_list(request):
 
+
     posts =Post.objects.all()
     context={
-        'posts': posts
+        'posts': posts,
+        'user':request.user,
     }
 
     # return HttpResponse( 'post-list')
@@ -47,7 +49,6 @@ def post_detail(request, pk):
 from posts.forms import PostForm
 
 
-# (function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None)
 
 @login_required
 def post_create(request):
@@ -78,4 +79,10 @@ def post_create(request):
     return render(request, 'posts/post_create.html',context)
 
 
+
+def post_delete(request,post_id):
+
+    post = Post.objects.filter(id = post_id)
+    post.delete()
+    return redirect('posts:post-list')
 
