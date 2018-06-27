@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
@@ -46,6 +47,9 @@ def post_detail(request, pk):
 from posts.forms import PostForm
 
 
+# (function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None)
+
+@login_required
 def post_create(request):
     # 새 포스트를 만들기
     # 만든 후에는 해당하는 post_detail로 이동

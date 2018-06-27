@@ -19,6 +19,9 @@ TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 
 AUTH_USER_MODEL = 'members.User'
 
+LOGIN_URL = 'members:login'
+
+
 print(BASE_DIR)
 print('MEDIA_ROOT:', MEDIA_ROOT)
 print('TEMPLATE_DIR', TEMPLATE_DIR)
