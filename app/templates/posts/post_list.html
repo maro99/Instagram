@@ -14,6 +14,13 @@
 
     <div class="card mb-4" >
         <div class = 'card-body'>
+
+            {% if post.author.img_profile %}
+            <div>
+                <img width="5%" src="{{post.author.img_profile.url}}" alt="">
+            </div>
+            {% endif %}
+
             <div >{{post.author.username}}</div>
             <!--<div><img width = "100%"src="/media/{{post.photo}}" alt=""></div>-->
             <!--하드코드 방식이라 좋지 않다. -->

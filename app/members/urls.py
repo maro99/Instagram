@@ -11,4 +11,5 @@ urlpatterns = [
     # path('signup/', views.signup_view, name = 'signup'),
 
     path('signup/', views.signup, name = 'signup'),
+    path('withdraw/',views.withdraw, name='withdraw'),
 ]

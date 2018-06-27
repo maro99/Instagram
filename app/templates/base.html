@@ -13,7 +13,8 @@
 
 <div class="container">
 
-        <h2>Instagram</h2>
+
+        <h2><a href="{% url 'index' %}">Instagram</a></h2>
 
 
     <!--user가 인증되어있으면 '로그아웃하기' 라는 링크를 보여주고 아니면 '로그인하기' 링크 보여주기 -->
@@ -40,6 +41,13 @@
             {% csrf_token %}
             <button type="submit">
                 로그아웃하기
+            </button>
+        </form>
+
+        <form action="{% url 'members:withdraw' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">
+                탈퇴
             </button>
         </form>
 
