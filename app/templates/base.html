@@ -30,6 +30,11 @@
 
     <div>
         {% if user.is_authenticated %}
+            {% if user.img_profile %}
+                <div>
+                    <img width="5%" src="{{user.img_profile.url}}" alt="">
+                </div>
+            {% endif %}
         <span>{{user}}로 로그인 중</span>
         <form action="{% url 'members:logout' %}" method="POST">
             {% csrf_token %}

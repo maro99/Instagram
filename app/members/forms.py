@@ -39,8 +39,50 @@ class SignupForm(forms.Form):
             }
         ),
     )
+    img_profile = forms.ImageField(
+        label='프로필 이미지',
+        widget=forms.FileInput(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        required=False,
+    )
+    site = forms.URLField(
+        label='홈페이지',
+        widget=forms.URLInput(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        required=False,
+    )
+    introduce = forms.CharField(
+        label='소개',
+        widget=forms.Textarea(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+    required = False,
+    )
 
+    CHOICE_GENDER=(
+        ('m','남성'),
+        ('f','여성'),
+        ('x','선텍안함'),
+    )
 
+    gender = forms.ChoiceField(
+        label='성별',
+        widget=forms.Select(
+            attrs={
+                'class': 'form-control',
+            }
+        ),
+        choices = CHOICE_GENDER,
+
+    )
     # form.is_valid()를 통과하지 못한 경우,
     #  유효성 검증을 통과하지 못한 내용은 form.<field>.errors에 정의됨 -> form을 순회하면 form.<field>를 하나씩 순회
     #  (통과하지 못한 경우의 'form'변수를 디버깅을 이용해 확인해본다)
@@ -93,11 +135,20 @@ class SignupForm(forms.Form):
         username = self.cleaned_data['username']
         email =  self.cleaned_data['email']
         password = self.cleaned_data['password']
+        img_profile = self.cleaned_data['img_profile']
+        site = self.cleaned_data['site']
+        introduce = self.cleaned_data['introduce']
+        gender = self.cleaned_data['gender']
 
+        # 여기에 값이 빈값이면 어떻게되나?
         user=User.objects.create_user(
             username=username,
             email=email,
             password=password,
+            img_profile=img_profile,
+            site=site,
+            introduce=introduce,
+            gender=gender,
         )
 
         return user

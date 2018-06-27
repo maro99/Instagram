@@ -268,7 +268,7 @@ def signup(request):
 
     if request.method == 'POST':
 
-        form = SignupForm(request.POST)
+        form = SignupForm(request.POST,request.FILES)
 
         # form에 들어있는 데이터가 유효한지 검사.(해당 form 클래스에서 정의한 데이터 형식에서 벋어나지 않는지 판단.)
         if form.is_valid():
