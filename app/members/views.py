@@ -13,6 +13,12 @@ from members.forms import SignupForm
 
 
 def login_view(request):
+    # 1. POST요청이 왓는뗴,요청이 올바르면서 < 코드에서 어느 위치인지 파악.
+    # 2. GET parameter 에 next값이 존재할 경우<-- GET parameter는 request로 접근
+    # 3. 해당값 url으로 redirect  <--redirect()함수는 URL문짜열로또 이동 가능
+    # 4. next값이 존재하지 않으면 원래 이동하던 곳으로 그대로 redirect < 문자열 있는지 없는지 if로 판단.
+
+
 
     # 1. member.urls <_ 'members/'로 include되도록 config.urls 모듈에 추가.
     # 2. pathh구현 URL: '/members/login/'
@@ -37,10 +43,14 @@ def login_view(request):
             #login()함수를 실행한다.
             login(request, user)
             #dlgn post-list로 redirect
+            if request.GET.get('next'):
+                return redirect(request.GET['next'])
+
             return redirect('posts:post-list')
         #인증에 실패한 경우 (username또는 password가 틀린경우)
         else:
             #다시 로그인 페이지로 redirect
+
             return redirect('members:login')
 
         #인증에 성공하면 post:post-list로 이동
