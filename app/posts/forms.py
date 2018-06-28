@@ -8,6 +8,20 @@ from posts.models import Post
 
 User=get_user_model()
 
+
+
+
+class PostModelForm(forms.ModelForm):
+    # filed 정의를 직접 하지 않음
+    # 어떤 filed를 사용할 것인지만 class Meta에 기록.
+
+    class Meta:
+        model = Post
+        # author 는 지워야 한다. 작성자가 선택하는 것만 넣는다.
+        fields= ['photo','content',]
+
+
+
 class PostForm(forms.Form):
 
     photo = forms.ImageField(

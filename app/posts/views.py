@@ -49,12 +49,36 @@ def post_detail(request, pk):
     return render(request, 'posts/post_detail.html', context)
 
 
-from posts.forms import PostForm
+from posts.forms import PostForm, PostModelForm
 
+
+def post_create(request):
+    # PostModelForm만들어서 기존과 같은역활 하게 하자.
+    #   form = PostModelForm(request.POST, request.FILES)
+    #   post = form.save(commit=False)
+    #   post.author = request.user
+    #   post.save()
+
+    if request.method == 'POST':
+        form =PostModelForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            post= form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('posts:post-list')
+    else:
+        form = PostModelForm()
+
+
+
+
+    context = {'form':form, }
+    return render(request, 'posts/post_create.html',context)
 
 
 @login_required
-def post_create(request):
+def post_create_bak(request):
     # 새 포스트를 만들기
     # 만든 후에는 해당하는 post_detail로 이동
     # forms.py에 PostForm을 구현해서 사용 .
