@@ -63,8 +63,9 @@ def post_create(request):
         form =PostModelForm(request.POST, request.FILES)
 
         if form.is_valid():
-            post= form.save(commit=False)
-            post.author = request.user
+            # 이전에 form 객체 생성하고 save 한 방식과 유사.
+            post= form.save(commit=False) # author 없는 상태여서 save안된다. 일단 commit=False로 인스턴스 생성만하고 save안한다.
+            post.author = request.user  # author 필드 우리가 넣어준다.(여기다 안빼고 PostModelForm에 넣으면 글쓰는사람이 author선택 가능해짐)
             post.save()
             return redirect('posts:post-list')
     else:
