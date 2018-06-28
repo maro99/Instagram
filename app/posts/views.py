@@ -30,10 +30,14 @@ def post_list(request):
     form = CommentModelForm()
 
     posts =Post.objects.all()
+
+    comments = Comment.objects.all()
+
     context={
         'posts': posts,
         'user':request.user,
         'form':form,
+        'comments':comments,
     }
 
     return render(request,'posts/post_list.html',context)
@@ -51,7 +55,7 @@ def post_detail(request, pk):
 from posts.forms import PostForm, PostModelForm, CommentModelForm
 
 
-
+@login_required
 def post_create(request):
     # PostModelForm만들어서 기존과 같은역활 하게 하자.
     #   form = PostModelForm(request.POST, request.FILES)

@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="afa1e0ff-5f7b-4114-96bb-fd88db2277e4" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/posts/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/posts/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/posts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/posts/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/posts/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/posts/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/posts/post_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/posts/post_list.html" afterDir="false" />
     </list>
@@ -19,14 +16,14 @@
     <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/exportToHTML" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="vertical" split-proportion="0.5821845">
+    <splitter split-orientation="vertical" split-proportion="0.8763838">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/posts/views.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="308">
-                  <caret line="135" lean-forward="true" selection-start-line="135" selection-end-line="135" />
+                <state relative-caret-position="450">
+                  <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
                   <folding>
                     <element signature="e#0#57#0" expanded="true" />
                   </folding>
@@ -37,8 +34,8 @@
           <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/posts/forms.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="210">
-                  <caret line="14" column="24" lean-forward="true" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
+                <state relative-caret-position="225">
+                  <caret line="15" column="23" lean-forward="true" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
                   <folding>
                     <element signature="e#1#25#0" expanded="true" />
                   </folding>
@@ -73,7 +70,7 @@
           <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/posts/models.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="345">
+                <state relative-caret-position="300">
                   <caret line="28" column="29" lean-forward="true" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
                   <folding>
                     <element signature="e#0#32#0" expanded="true" />
@@ -82,11 +79,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="post_list.html" pinned="false" current-in-tab="false">
+          <file leaf-file-name="post_list.html" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/templates/posts/post_list.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="593">
-                  <caret line="74" column="14" lean-forward="true" selection-start-line="74" selection-start-column="14" selection-end-line="74" selection-end-column="14" />
+                <state relative-caret-position="289">
+                  <caret line="61" column="69" selection-start-line="61" selection-start-column="69" selection-end-line="61" selection-end-column="69" />
                 </state>
               </provider>
             </entry>
@@ -133,8 +130,8 @@
           <file leaf-file-name="post_create.html" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/templates/posts/post_create.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="104">
-                  <caret line="12" column="44" selection-start-line="12" selection-start-column="44" selection-end-line="12" selection-end-column="44" />
+                <state relative-caret-position="29">
+                  <caret line="6" column="5" lean-forward="true" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
                 </state>
               </provider>
             </entry>
@@ -182,8 +179,8 @@
         <option value="$PROJECT_DIR$/app/posts/models.py" />
         <option value="$PROJECT_DIR$/app/posts/urls.py" />
         <option value="$PROJECT_DIR$/app/posts/forms.py" />
-        <option value="$PROJECT_DIR$/app/templates/posts/post_list.html" />
         <option value="$PROJECT_DIR$/app/posts/views.py" />
+        <option value="$PROJECT_DIR$/app/templates/posts/post_list.html" />
       </list>
     </option>
   </component>
@@ -322,12 +319,12 @@
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1646175" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.13592896" side_tool="true" visible="true" weight="0.042417817" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.13661203" side_tool="true" visible="true" weight="0.4252386" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32979852" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.864071" visible="true" weight="0.042417817" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" sideWeight="0.863388" visible="true" weight="0.4252386" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.45387062" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -632,30 +629,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/posts/models.py">
+    <entry file="file://$PROJECT_DIR$/app/templates/posts/post_create.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="28" column="29" lean-forward="true" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/posts/post_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="593">
-          <caret line="74" column="14" lean-forward="true" selection-start-line="74" selection-start-column="14" selection-end-line="74" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/posts/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="24" lean-forward="true" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
-          <folding>
-            <element signature="e#1#25#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="270">
+          <caret line="18" column="6" lean-forward="true" selection-start-line="18" selection-start-column="6" selection-end-line="20" />
         </state>
       </provider>
     </entry>
@@ -669,20 +646,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/posts/post_create.html">
+    <entry file="file://$PROJECT_DIR$/app/posts/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="6" lean-forward="true" selection-start-line="18" selection-start-column="6" selection-end-line="20" />
+        <state relative-caret-position="225">
+          <caret line="15" column="23" lean-forward="true" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
+          <folding>
+            <element signature="e#1#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/posts/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="28" column="29" lean-forward="true" selection-start-line="28" selection-start-column="29" selection-end-line="28" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/posts/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="135" lean-forward="true" selection-start-line="135" selection-end-line="135" />
+        <state relative-caret-position="450">
+          <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
           <folding>
             <element signature="e#0#57#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/posts/post_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="61" column="69" selection-start-line="61" selection-start-column="69" selection-end-line="61" selection-end-column="69" />
         </state>
       </provider>
     </entry>
