@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.db import models
 
+from members.models import User
+
 #posts 앱의 class Post
 #   author settings.AUTH_USER_MODE
 #   photo (ImageField)
@@ -22,6 +24,29 @@ class Post(models.Model):
     class Meta:
         ordering =['-pk']
 
-#admin에 등록
-#superuser생성
-#로그인해서 post하나 추가하기.
+
+class Comment(models.Model):
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        null=True,
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
+
+    content = models.CharField(max_length=300, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+class PostLike(models.Model):
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
+    created_at = models.DateTimeField(auto_now_add=True)

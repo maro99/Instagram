@@ -21,6 +21,7 @@ AUTH_USER_MODEL = 'members.User'
 
 LOGIN_URL = 'members:login'
 
+STATIC_DIR = os.path.join(BASE_DIR,'static')
 
 print(BASE_DIR)
 print('MEDIA_ROOT:', MEDIA_ROOT)
@@ -149,3 +150,7 @@ STATIC_URL = '/static/'
 
 #User-uploaded file을 접근할 URL접두어
 MEDIA_URL ='/media/'
+
+
+STATICFILES_DIRS = [STATIC_DIR,]
+

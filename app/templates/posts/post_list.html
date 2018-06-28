@@ -1,5 +1,5 @@
 {% extends 'base.html'%}
-
+{% load static %}
 
 {% block content %}
 
@@ -15,10 +15,28 @@
     <div class="card mb-4" >
         <div class = 'card-body'>
 
+            <!--
+            1. static 폴더 만들기q
+            2. settings.py에 STATIC_DIR 변수에 해당 경로 추가
+            3. STATICFILES_DIRS예 위 변수 추가.
+            4. 아래에서 post.author.img.profile존재하지 않으면
+                /static/images/blank_user.png <- 이 경로를 src로 사용한다.
+                이떄, 'static'태그를 사용
+                -->
+
+
+
+
             {% if post.author.img_profile %}
-            <div>
-                <img width="5%" src="{{post.author.img_profile.url}}" alt="">
-            </div>
+
+                <div>
+                    <img width="8%" src="{{post.author.img_profile.url}} " class="rounded-circle" alt="">
+                </div>
+            {% else %}
+                <div>
+                    <img width="8%" src="{% static '/images/blank_user.png' %}" alt="" class="rounded-circle">
+                </div>
+
             {% endif %}
 
             <div >{{post.author.username}}</div>
