@@ -32,12 +32,12 @@
                 <img width="100%" src="{{post.photo.url}}" alt="">
                 <p>{{ post.content }}</p>
 
-                {% if post.author.username == user.username %}
-                    <form action="{% url 'posts:post-delete' post.id %}" method='POST'>
-                         {% csrf_token %}
-                        <button type="submit">글 삭제</button>
-                    </form>
-                {% endif %}
+
+                <form action="{% url 'posts:post-delete' pk=post.pk %}" method='POST'>
+                    {% csrf_token %}
+                    <button type="submit">글 삭제</button>
+                </form>
+
 
             </div>
         </div>

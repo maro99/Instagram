@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 #post_list(request)
     # /posts/
@@ -19,12 +20,14 @@ from django.shortcuts import render, redirect
 #2. view 에서 template을 렌더링 하는 기능 추가
 #3. templates에서 QuerySet 또는 objects를 사용해서 객체 출력
 #4. template에 extend 사용
+from django.views.decorators.http import require_POST
 
 from .models import Post
 
 
 
 def post_list(request):
+
 
 
     posts =Post.objects.all()
@@ -79,10 +82,56 @@ def post_create(request):
     return render(request, 'posts/post_create.html',context)
 
 
+# @login_required
+# @require_POST
+# def post_delete(request,pk):
+#
+#     post = get_object_or_404(Post, pk = pk)
+#     if post.author != request.user:
+#         raise PermissionDenied('지울 권한이 없습니다.')
+#     post.delete()
+#
+#     return redirect('posts:post-list')
 
-def post_delete(request,post_id):
 
-    post = Post.objects.filter(id = post_id)
-    post.delete()
+#위 두개의 decorator 없이 구현해보자.
+def post_delete(request,pk):
+
+    if request.method =='POST':
+        if request.user.is_anonymous==False:
+
+            post = get_object_or_404(Post, pk =pk)
+
+            if post.author != request.user:
+                raise PermissionDenied('지울 권한이 없습니다.')
+            post.delete()
+        else:
+            return redirect('members:login')
+
     return redirect('posts:post-list')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

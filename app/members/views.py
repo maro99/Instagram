@@ -39,13 +39,18 @@ def login_view(request):
 
         #인증에 성공한 경우
         if user is not None:
-            #세션값을 만들어 DB예 저장하과 HTTP response의 Cookie에 해당값을 담아보내도록 하는
+            #세션값을 만들어 DB예 저장하과 HTTP response의 Cookie에 해당값을 담아보내도록 하는g
             #login()함수를 실행한다.
+            # session_id 값을  django_sessions테이블에 저장, 데이터는user와 연결됨
+            # 이 함수 실행 후 돌려줄 HTTP Response에는 Set-Cookie헤더를 추가, 내용은 sessionid=<session값>
             login(request, user)
             #dlgn post-list로 redirect
+
+            #GET parameter에 'next'값이 전달되면 해당 값으로 redirect
             if request.GET.get('next'):
                 return redirect(request.GET['next'])
 
+            #next값이 전달되지 않으면 post-list로 redirect
             return redirect('posts:post-list')
         #인증에 실패한 경우 (username또는 password가 틀린경우)
         else:
