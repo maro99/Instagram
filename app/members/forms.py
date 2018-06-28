@@ -41,7 +41,7 @@ class SignupForm(forms.Form):
     )
     img_profile = forms.ImageField(
         label='프로필 이미지',
-        widget=forms.FileInput(
+        widget=forms.ClearableFileInput(
             attrs={
                 'class': 'form-control',
             }
@@ -67,12 +67,6 @@ class SignupForm(forms.Form):
     required = False,
     )
 
-    CHOICE_GENDER=(
-        ('m','남성'),
-        ('f','여성'),
-        ('x','선텍안함'),
-    )
-
     gender = forms.ChoiceField(
         label='성별',
         widget=forms.Select(
@@ -80,7 +74,7 @@ class SignupForm(forms.Form):
                 'class': 'form-control',
             }
         ),
-        choices = CHOICE_GENDER,
+        choices = User.CHOICE_GENDER,
 
     )
     # form.is_valid()를 통과하지 못한 경우,
@@ -132,24 +126,65 @@ class SignupForm(forms.Form):
 
 
     def signup(self):
-        username = self.cleaned_data['username']
-        email =  self.cleaned_data['email']
-        password = self.cleaned_data['password']
-        img_profile = self.cleaned_data['img_profile']
-        site = self.cleaned_data['site']
-        introduce = self.cleaned_data['introduce']
-        gender = self.cleaned_data['gender']
 
-        # 여기에 값이 빈값이면 어떻게되나?
-        user=User.objects.create_user(
-            username=username,
-            email=email,
-            password=password,
-            img_profile=img_profile,
-            site=site,
-            introduce=introduce,
-            gender=gender,
-        )
+        fields =[
+            'username',
+            'email',
+            'password',
+            'img_profile',
+            'site',
+            'introduce',
+            'gender',
+        ]
+
+
+        # user=User.objects.create_user(**self.cleaned_data) ##이렇게 바로 받으면 password2있어서 안된다.
+        # user = User.objects.create_user(**{field: self.cleaned_data.get(field) for field in fields}) #내가한것.
+
+        # create_user_dict={}
+        # for key, value in self.cleaned_data.items():
+        #     if key in fields:
+        #         create_user_dict[key]=value
+
+        #user = User.objects.create_user(**create_user_dict)
+
+
+
+
+
+        #       위에 것을 리스트 컴프리핸션으로 바꾸자.
+
+        # create_user_dict = { key:value for key, value in self.cleaned_data.items() if key in fields }
+        # user = User.objects.create_user(**create_user_dict)
+
+
+
+
+
+        #       filter쓰는 방법으로 해보자.
+
+        #items 에는 key,value로된 tuple있어서 이것 처리하는 함수 만들어 줘야함.
+
+        def in_fields(item):
+            return item[0] in fields
+
+        result = filter(in_fields, self.cleaned_data.items()) # 이 값을 순회하면 튜풀이 나온다.
+
+        #이 ((key1,value1), (key2,value2) . . . . ..) 이렇게 거처서 나옴,
+
+        # 다시 dict에 담아줌.
+        create_user_dict={}
+        for item in result:
+            create_user_dict[item[0]]=item[1]
+
+        user = User.objects.create_user(**create_user_dict)
+
+        #더쉽게는 이렇게 호출하면 끝남.
+        # create_user_dict = dict(filter(in_fields, self.cleaned_data.items()))
+        #람다함수 쓰면
+        # create_user_dict = dict(filter(lambda item:item[0] in fiedls , self.cleaned_data.items()))
+
+
 
         return user
 
