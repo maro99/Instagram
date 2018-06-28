@@ -56,6 +56,20 @@
                     <button type="submit">글 삭제</button>
                 </form>
 
+                <form action="{% url 'posts:post-comment' pk=post.pk %}" method = 'POST'>
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="form-group" >
+
+                        <div class="float-left">{{user.username}}</div>
+                        <!--<label for="{{field.id_for_label}}">{{ field.label }}</label>-->
+                        <div class="float-left">{{field}}</div>
+                        <button type="submit" class="float-right"> 댓글등록</button>
+                    </div>
+                    {% endfor %}
+
+                </form>
+
 
             </div>
         </div>

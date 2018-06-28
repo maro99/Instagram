@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 # from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
-from posts.models import Post
+from posts.models import Post, Comment
 
 User=get_user_model()
 
@@ -18,7 +18,14 @@ class PostModelForm(forms.ModelForm):
     class Meta:
         model = Post
         # author 는 지워야 한다. 작성자가 선택하는 것만 넣는다.
-        fields= ['photo','content',]
+        fields = ['photo','content',]
+
+
+class CommentModelForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+
 
 
 

@@ -22,21 +22,20 @@ from django.shortcuts import render, redirect, get_object_or_404
 #4. template에 extend 사용
 from django.views.decorators.http import require_POST
 
-from .models import Post
-
+from .models import Post, Comment
 
 
 def post_list(request):
 
-
+    form = CommentModelForm()
 
     posts =Post.objects.all()
     context={
         'posts': posts,
         'user':request.user,
+        'form':form,
     }
 
-    # return HttpResponse( 'post-list')
     return render(request,'posts/post_list.html',context)
 
 
@@ -49,7 +48,8 @@ def post_detail(request, pk):
     return render(request, 'posts/post_detail.html', context)
 
 
-from posts.forms import PostForm, PostModelForm
+from posts.forms import PostForm, PostModelForm, CommentModelForm
+
 
 
 def post_create(request):
@@ -70,9 +70,6 @@ def post_create(request):
             return redirect('posts:post-list')
     else:
         form = PostModelForm()
-
-
-
 
     context = {'form':form, }
     return render(request, 'posts/post_create.html',context)
@@ -131,7 +128,18 @@ def post_delete(request,pk):
 #     #나머지는 같다.
 
 
+@login_required
+@require_POST
+def post_comment(request,pk):
 
+    form = CommentModelForm(request.POST)
+
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.post = Post.objects.get(pk=pk)
+        comment.user = request.user
+        comment.save()
+        return redirect('index')
 
 
 
