@@ -4,7 +4,7 @@ from django.db import IntegrityError
 from django.test import TestCase, TransactionTestCase
 
 # Create your tests here.
-from members.exception import RelationNotExist
+from members.exception import RelationNotExist, DuplicateRelationException
 
 User =get_user_model()
 
@@ -64,9 +64,8 @@ class RelationTestCase(TransactionTestCase):  #TestCase에서 바뀜
         u1.follow(u2)
 
         #2번째 실행에서는 IntegretyError 발생할 것이다.
-        with self.assertRaises(IntegrityError):  # with은 block을 만들어서 실행하고
+        with self.assertRaises(DuplicateRelationException):  # with은 block을 만들어서 실행하고 exception있으면 true.
             u1.follow(u2)
-
 
         #u1의 follwing이 하나인지 확인
         self.assertEqual(u1.following.count(),1)

@@ -2,7 +2,11 @@ from django.db import models
 
 from django.contrib.auth.models import AbstractUser
 
-from members.exception import RelationNotExist
+from members.exception import RelationNotExist, DuplicateRelationException
+
+
+class DulplcateRelationException(object):
+    pass
 
 
 class User(AbstractUser):
@@ -28,10 +32,11 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+    def follow(self, to_user):
+        if self.relations_by_from_user.filter(to_user=to_user).exists():
+            raise DuplicateRelationException(from_user=self, to_user=to_user, relation_type='follow')
 
-    def follow(self,to_user):
-        relation=Relation.objects.create(
-            from_user=self,
+        return self.relations_by_from_user.create(
             to_user=to_user,
             relation_type=Relation.RELATION_TYPE_FOLLOW,
         )
