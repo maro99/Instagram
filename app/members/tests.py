@@ -1,12 +1,14 @@
+from sqlite3 import IntegrityError
+
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import TestCase, TransactionTestCase
 
 # Create your tests here.
 
 User =get_user_model()
 
 
-class RelationTestCase(TestCase):
+class RelationTestCase(TransactionTestCase):  #TestCase에서 바뀜
     def test_follow(self):
         """
         특정  User 가 다른 User를 follow했을 경우, 정상 작동하는경우.
@@ -42,3 +44,25 @@ class RelationTestCase(TestCase):
 
         #생성됬었던 relation이 u1.follwoing_relations에 포함되어 있는지.
         self.assertIn(relation, u1.following_relations)
+
+
+    def test_follow_only_once(self):
+        u1 = User.objects.create_user(username='u1')
+        u2 = User.objects.create_user(username='u2')
+
+        # #u2로의 follow를 두번 실행한다.
+        # u1.follow(u2)
+        # u1.follow(u2)#--------------->팔로우 두번하면 안되니까 안되는게 맞다.
+
+        #u2로의 follow를 두번 실행한다.
+        u1.follow(u2)
+
+        #2번째 실행에서는 IntegretyError 발생할 것이다.
+        with self.assertRaises(IntegrityError):  # with은 block을 만들어서 실행하고
+            u1.follow(u2)
+
+
+        #u1의 follwing이 하나인지 확인
+        self.assertEqual(u1.following.count(),1)
+
+

@@ -118,6 +118,11 @@ class Relation(models.Model):
     relation_type = models.CharField(max_length=1, choices=CHOICES_RELATION_TYPE)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        unique_together=(
+            ('from_user','to_user'),
+        )
+
     def __str__(self):
         return 'From {from_user} to {to_user} ({type})'.format(
             from_user=self.from_user.username,
