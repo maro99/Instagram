@@ -18,7 +18,8 @@ class RelationTestCase(TestCase):
         u2 = User.objects.create_user(username='u2')
 
         # u1 이 u2를 follow하도록 함.
-        relation = u1.relations_by_from_user.create(to_user=u2, relation_type='f')
+        # relation = u1.relations_by_from_user.create(to_user=u2, relation_type='f') # 직관적이지 못해서 아래처럼 해봄.
+        relation = u1.follow(u2)
 
 
 
