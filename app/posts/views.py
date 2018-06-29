@@ -22,7 +22,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 #4. template에 extend 사용
 from django.views.decorators.http import require_POST
 
-from .models import Post, Comment
+from .models import Post, Comment, PostLike
 
 
 def post_list(request):
@@ -33,11 +33,14 @@ def post_list(request):
 
     comments = Comment.objects.all()
 
+    postlikes = PostLike.objects.all()
+
     context={
         'posts': posts,
         'user':request.user,
         'form':form,
         'comments':comments,
+        'postlikes':postlikes,
     }
 
     return render(request,'posts/post_list.html',context)
@@ -143,9 +146,23 @@ def post_comment(request,pk):
         comment.post = Post.objects.get(pk=pk)
         comment.user = request.user
         comment.save()
-        return redirect('index')
 
+    return redirect('index')
 
+@login_required
+@require_POST
+def post_like(request, pk):
+
+    user = request.user
+    post = Post.objects.get(pk = pk)
+
+    postlike=PostLike(
+        user = user,
+        post = post,
+    )
+    postlike.save()
+
+    return redirect('index')
 
 
 

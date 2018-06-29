@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 # from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
-from posts.models import Post, Comment
+from posts.models import Post, Comment, PostLike
 
 User=get_user_model()
 
@@ -25,7 +25,6 @@ class CommentModelForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content']
-
 
 
 

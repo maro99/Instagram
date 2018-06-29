@@ -75,9 +75,33 @@
                         <div class="float-left">{{user.username}}</div>
                         <!--<label for="{{field.id_for_label}}">{{ field.label }}</label>-->
                         <div class="float-left">{{field}}</div>
-                        <button type="submit" class="float-right"> 댓글등록</button>
+                        <button type="submit" class="float-left"> 댓글등록</button>
                     </div>
                     {% endfor %}
+
+                </form>
+
+                <form action="{% url 'posts:post-like' pk=post.pk %}" method="POST">
+                    {% csrf_token %}
+
+
+                    {% if user.username in post.post_like_user_names %}
+                        <button type="submit" class="float-right">좋아요 취소</button>
+                    {% else %}
+                        <button type="submit" class="float-right">좋아요</button>
+                    {% endif %}
+
+                    <!--{% for pl in post.postlike_set.all %}-->
+
+                        <!--{% if p1.user == user %}-->
+                             <!--<button type="submit" class="float-right">좋아요 취소</button>-->
+                        <!--{% else %}-->
+                             <!--<button type="submit" class="float-right">좋아요</button>-->
+                        <!--{% endif %}-->
+
+                    <!--{% endfor %}-->
+
+
 
                 </form>
 

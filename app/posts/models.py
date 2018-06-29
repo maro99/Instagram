@@ -25,6 +25,18 @@ class Post(models.Model):
         ordering =['-pk']
 
 
+
+
+    @property
+    def post_like_user_names(self):
+        result_users = []
+
+        for pl in self.postlike_set.all():
+            result_users.append(pl.username)
+
+        return result_users
+
+
 class Comment(models.Model):
     post = models.ForeignKey(
         Post,
@@ -50,3 +62,4 @@ class PostLike(models.Model):
         on_delete=models.CASCADE
     )
     created_at = models.DateTimeField(auto_now_add=True)
+
