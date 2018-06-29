@@ -18,6 +18,8 @@ class User(AbstractUser):
         through='Relation',
         symmetrical=False,
         blank=True,
+        related_name='users',
+        related_query_name='user',
     )
 
     def __str__(self):
