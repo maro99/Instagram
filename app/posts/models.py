@@ -32,7 +32,7 @@ class Post(models.Model):
         result_users = []
 
         for pl in self.postlike_set.all():
-            result_users.append(pl.username)
+            result_users.append(pl.user.username)
 
         return result_users
 

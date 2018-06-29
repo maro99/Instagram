@@ -156,11 +156,16 @@ def post_like(request, pk):
     user = request.user
     post = Post.objects.get(pk = pk)
 
-    postlike=PostLike(
-        user = user,
-        post = post,
-    )
-    postlike.save()
+    if user.username in post.post_like_user_names:
+        postlike_will_del = PostLike.objects.filter(user=user, post =post)
+        postlike_will_del.delete()
+
+    else:
+        postlike=PostLike(
+            user = user,
+            post = post,
+        )
+        postlike.save()
 
     return redirect('index')
 

@@ -1,0 +1,19 @@
+                     List of relations
+ Schema |             Name              | Type  |   Owner   
+--------+-------------------------------+-------+-----------
+ public | auth_group                    | table | nasanmaro
+ public | auth_group_permissions        | table | nasanmaro
+ public | auth_permission               | table | nasanmaro
+ public | django_admin_log              | table | nasanmaro
+ public | django_content_type           | table | nasanmaro
+ public | django_migrations             | table | nasanmaro
+ public | django_session                | table | nasanmaro
+ public | members_relation              | table | nasanmaro
+ public | members_user                  | table | nasanmaro
+ public | members_user_groups           | table | nasanmaro
+ public | members_user_user_permissions | table | nasanmaro
+ public | posts_comment                 | table | nasanmaro
+ public | posts_post                    | table | nasanmaro
+ public | posts_postlike                | table | nasanmaro
+(14 rows)
+
