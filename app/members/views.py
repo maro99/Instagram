@@ -306,3 +306,22 @@ def withdraw(request):
     logout(request)
     user.delete()
     return redirect('index')
+
+
+
+def follow_toggle(request):
+    """
+
+
+
+    GET요청을 처리하지 않음
+    POST 요청일때
+        1. request.POST로 'user_pk' 값을 전달받음
+            pk가 user_pk인 User를 user에 할당.
+        2. request.user의
+    :param request:
+    :return:
+    """
+
+
+
