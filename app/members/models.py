@@ -2,6 +2,9 @@ from django.db import models
 
 from django.contrib.auth.models import AbstractUser
 
+from members.exception import RelationNotExist
+
+
 class User(AbstractUser):
     CHOICE_GENDER=(
         ('m','남성'),
@@ -18,7 +21,7 @@ class User(AbstractUser):
         through='Relation',
         symmetrical=False,
         blank=True,
-        related_name='from_relaiton_users',
+        related_name='from_relation_users',
         related_query_name='from_relation_user',
     )
 
@@ -35,6 +38,24 @@ class User(AbstractUser):
 
         return relation
 
+    def unfollow(self,to_user):
+        # 아래의 경우가 존재하면 실행
+        # 존재하지 않으면 exception발생.
+        #relation 맞는것 찾아서 필터링후 제거해주자.
+
+        q= self.relations_by_from_user.filter(
+            to_user=to_user,
+            relation_type=Relation.RELATION_TYPE_FOLLOW,
+        )
+        if q:
+            q.delete()
+
+        else:
+            raise RelationNotExist(
+                from_user=self,
+                to_user=to_user,
+                relation_type=Relation.RELATION_TYPE_FOLLOW,
+            )
 
     @property
     def following(self):

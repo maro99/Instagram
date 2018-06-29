@@ -1,14 +1,20 @@
-from sqlite3 import IntegrityError
 
 from django.contrib.auth import get_user_model
+from django.db import IntegrityError
 from django.test import TestCase, TransactionTestCase
 
 # Create your tests here.
+from members.exception import RelationNotExist
 
 User =get_user_model()
 
 
 class RelationTestCase(TransactionTestCase):  #TestCase에서 바뀜
+
+    def create_dummy_user(self,num):
+        # num 에 주어진 개수만큼 유저를 생성 및 리턴.
+        return [User.objects.create_user(username=f'u{x}')for x in range(num)]
+
     def test_follow(self):
         """
         특정  User 가 다른 User를 follow했을 경우, 정상 작동하는경우.
@@ -66,3 +72,20 @@ class RelationTestCase(TransactionTestCase):  #TestCase에서 바뀜
         self.assertEqual(u1.following.count(),1)
 
 
+    def test_unfollow_if_follow_exist(self):
+        u1, u2 = self.create_dummy_user(2)
+
+        # u1이 u2를 follow후 uunfollow 실행
+        u1.follow(u2)
+        u1.unfollow(u2)
+
+        # u1의 following에 u2가 없어야함.
+        self.assertNotIn(u2, u1.following)
+
+
+    def test_unfollow_fail_if_follow_not_exist(self):
+        u1, u2 = self.create_dummy_user(2)
+
+        #아래 코드는 올바르지 않아아햠.(Exception이 발생해야함.)
+        with self.assertRaises(RelationNotExist):
+            u1.unfollow(u2)
