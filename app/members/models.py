@@ -13,13 +13,13 @@ class User(AbstractUser):
     site = models.URLField(blank=True)
     introduce = models.TextField(blank= True)
     gender = models.CharField(max_length=1, choices=CHOICE_GENDER)
-    relations = models.ManyToManyField(
+    to_relations_users = models.ManyToManyField(
         'self',
         through='Relation',
         symmetrical=False,
         blank=True,
-        related_name='users',
-        related_query_name='user',
+        related_name='from_relaiton_users',
+        related_query_name='from_relation_user',
     )
 
     def __str__(self):
@@ -33,7 +33,13 @@ class User(AbstractUser):
         # return User.objects.filter(pk__in=user_pk_list)
 
         # 아래 정의한 property 활용시
-        return User.objects.filter(pk__in=self.following_relations.values('to_user'))
+        # return User.objects.filter(pk__in=self.following_relations.values('to_user'))
+
+
+        #다시해봄.
+        return User.objects.filter(
+            relations_by_to_user__from_user=self, relations_by_to_user__relation_type=Relation.RELATION_TYPE_FOLLOW
+        )
 
     @property
     def followers(self):
@@ -43,7 +49,12 @@ class User(AbstractUser):
         # return User.objects.filter(pk__in=user_pk_list)
 
         # 아래 정의한 property 활용시
-        return User.objects.filter(pk__in=self.follower_relations.values('to_user'))
+        # return User.objects.filter(pk__in=self.follower_relations.values('to_user'))
+
+        # 다시해봄.
+        return User.objects.filter(
+            relations_by_from_user__to_user=self, relations_by_from_user__relation_type=Relation.RELATION_TYPE_FOLLOW
+        )
 
 
     @property
