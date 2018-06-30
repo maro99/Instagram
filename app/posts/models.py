@@ -20,7 +20,7 @@ class Post(models.Model):
                                                             # 어디로 갈지 upload_to 설정함.
     content = models.TextField(blank =True)
     created_at = models.DateTimeField(auto_now_add=True)
-    # likes = models.IntegerField(default=0)
+    likes = models.IntegerField(default=0)
 
     class Meta:
         ordering =['-pk']
