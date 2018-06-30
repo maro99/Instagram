@@ -89,7 +89,7 @@
                     {% csrf_token %}
 
 
-                    {% if user.username in post.post_like_user_names %}
+                    {% if user in post.post_like_users %}
                         <button type="submit" class="float-right">좋아요 취소</button>
                     {% else %}
                         <button type="submit" class="float-right">좋아요</button>

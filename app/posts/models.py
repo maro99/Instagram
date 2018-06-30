@@ -20,19 +20,17 @@ class Post(models.Model):
                                                             # 어디로 갈지 upload_to 설정함.
     content = models.TextField(blank =True)
     created_at = models.DateTimeField(auto_now_add=True)
+    # likes = models.IntegerField(default=0)
 
     class Meta:
         ordering =['-pk']
 
-
-
-
     @property
-    def post_like_user_names(self):
+    def post_like_users(self):
         result_users = []
 
         for pl in self.postlike_set.all():
-            result_users.append(pl.user.username)
+            result_users.append(pl.user)
 
         return result_users
 

@@ -5,8 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from members.exception import RelationNotExist, DuplicateRelationException
 
 
-class DulplcateRelationException(object):
-    pass
+
 
 
 class User(AbstractUser):

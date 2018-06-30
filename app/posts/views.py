@@ -1,7 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render, redirect, get_object_or_404
+User = get_user_model()
 
 #post_list(request)
     # /posts/
@@ -136,36 +138,36 @@ def post_delete(request,pk):
 
 
 @login_required
-@require_POST
 def post_comment(request,pk):
 
-    form = CommentModelForm(request.POST)
+    if request.method =='POST':
+        form = CommentModelForm(request.POST)
 
-    if form.is_valid():
-        comment = form.save(commit=False)
-        comment.post = Post.objects.get(pk=pk)
-        comment.user = request.user
-        comment.save()
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = Post.objects.get(pk=pk)
+            comment.user = request.user
+            comment.save()
 
     return redirect('index')
 
 @login_required
-@require_POST
 def post_like(request, pk):
 
-    user = request.user
-    post = Post.objects.get(pk = pk)
+    if request.method == 'POST':
+        user = request.user
+        post = Post.objects.get(pk = pk)
 
-    if user.username in post.post_like_user_names:
-        postlike_will_del = PostLike.objects.filter(user=user, post =post)
-        postlike_will_del.delete()
+        if user in post.post_like_users:
+        # if user in User.obejcts.filter(pk__in=post.postlike_set.value('user_id')):
+            PostLike.objects.filter(user=user, post =post).delete()
 
-    else:
-        postlike=PostLike(
-            user = user,
-            post = post,
-        )
-        postlike.save()
+        else:
+            postlike=PostLike(
+                user = user,
+                post = post,
+            )
+            postlike.save()
 
     return redirect('index')
 
