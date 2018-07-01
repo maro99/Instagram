@@ -14,4 +14,5 @@ urlpatterns = [
     path('withdraw/',views.withdraw, name='withdraw'),
 
     path('<int:pk>/follow/',views.follow_toggle,name='follow-toggle'),
+    path('<int:pk>/block/', views.block_toggle, name='block-toggle'),
 ]

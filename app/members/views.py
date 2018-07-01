@@ -331,5 +331,17 @@ def follow_toggle(request ,pk):
             from_user.unfollow(to_user)
         else:
             from_user.follow(to_user)
-        return redirect('index')
+    return redirect('index')
 
+def block_toggle(request, pk):
+
+    if request.method == 'POST':
+        from_user = request.user
+        to_user = User.objects.filter(pk=pk)[0]
+
+        if to_user in from_user.blocking:
+            from_user.unblock(to_user)
+        else:
+            from_user.block(to_user)
+
+    return redirect('index')

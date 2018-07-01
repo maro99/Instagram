@@ -3,14 +3,94 @@
 
 {% block content %}
 
+    <!--followers, following 출력.-->
+    {% if user.following %}
+        <h3>following</h3>
+        <ul>
+            {% for following_user in user.following %}
+                <li>
+                    {% if following_user.img_profile %}
+                        <div class="float-left" style="width:100px">
+                            <img width="40%" src="{{following_user.img_profile.url}} " class="rounded-circle" alt="">
+                        </div>
+                    {% else %}
+                        <div>
+                            <img width="8%" src="{% static '/images/blank_user.png' %}" alt="" class="rounded-circle">
+                        </div>
+
+                    {% endif %}
+
+                    <div class="float-left">
+                        {{ following_user }}
+                    </div>
+
+                    <form action="{% url 'members:follow-toggle' pk=following_user.pk %}" method="POST" style="display: inline-block;" >
+                        {% csrf_token %}
+                        {% if following_user in user.following %}
+                            <button type="submit" class="btn btn-outline-primary btn-sm">- UnFollow</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-outline-primary btn-sm">+ Follow</button>
+                        {% endif %}
+                    </form>
+
+
+                    <form action="{% url 'members:block-toggle' pk=following_user.pk %}" method="POST" style="display: inline-block;" >
+                        {% csrf_token %}
+                        {% if following_user in user.blocking %}
+                            <button type="submit" class="btn btn-outline-primary btn-sm">- UnBlock</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-outline-primary btn-sm">+ Block</button>
+                        {% endif %}
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if user.followers %}
+        <h3>followers</h3>
+        <ul>
+            {% for follower_user in user.followers %}
+                <li>
+                    {% if follower_user.img_profile %}
+                        <div class="float-left" style="width:100px">
+                            <img width="40%" src="{{follower_user.img_profile.url}} " class="rounded-circle" alt="">
+                        </div>
+                    {% else %}
+                        <div>
+                            <img width="8%" src="{% static '/images/blank_user.png' %}" alt="" class="rounded-circle">
+                        </div>
+                    {% endif %}
+                    <div class="float-left">
+                        {{ follower_user }}
+                    </div>
+
+                    <form action="{% url 'members:follow-toggle' pk=follower_user.pk %}" method="POST" style="display: inline-block;" >
+                        {% csrf_token %}
+
+                        {% if follower_user in user.following %}
+                            <button type="submit" class="btn btn-outline-primary btn-sm">- UnFollow</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-outline-primary btn-sm">+ Follow</button>
+                        {% endif %}
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+
+    {% endif %}
+
+
+
+
+
+
     <h1>post_list</h1>
     {% for post in posts %}
     <!--
         post의 author,username과
         post.photo를 출력
     -->
-
-
 
     <div class="card mb-4" >
         <div class = 'card-body'>
@@ -48,6 +128,18 @@
                         <button type="submit" class="btn btn-outline-primary btn-sm">- UnFollow</button>
                     {% else %}
                         <button type="submit" class="btn btn-outline-primary btn-sm">+ Follow</button>
+                    {% endif %}
+                {% endif %}
+            </form>
+
+            <form action="{% url 'members:block-toggle' pk=post.author.pk %}" method="POST" style="display: inline-block;" >
+                {% csrf_token %}
+
+                {% if post.author != user %}
+                    {% if post.author in user.blocking %}
+                    <button type="submit" class="btn btn-outline-primary btn-sm">- UnBlock</button>
+                    {% else %}
+                    <button type="submit" class="btn btn-outline-primary btn-sm">+ Block</button>
                     {% endif %}
                 {% endif %}
             </form>

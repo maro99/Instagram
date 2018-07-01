@@ -60,6 +60,20 @@ class User(AbstractUser):
                 relation_type=Relation.RELATION_TYPE_FOLLOW,
             )
 
+    def block(self,to_user):
+
+        return self.relations_by_from_user.create(
+            to_user=to_user,
+            relation_type=Relation.RELATION_TYPE_BLOCK
+        )
+
+    def unblock(self,to_user):
+        q= self.relations_by_from_user.filter(
+            to_user=to_user,
+            relation_type=Relation.RELATION_TYPE_BLOCK,
+        )
+        q.delete()
+
     @property
     def following(self):
         # 내가 follow중인 User Query리턴
@@ -90,6 +104,12 @@ class User(AbstractUser):
         # return User.objects.filter(
         #     relations_by_to_from__to_user=self, relations_by_to_from__relation_type=Relation.RELATION_TYPE_FOLLOW
         # )#안될것 같아서 주석 일단 해놓음.
+
+
+    @property
+    def blocking(self):
+        #아래 정의한 property 활용시
+        return User.objects.filter(pk__in=self.block_relations.values('to_user'))
 
 
     @property
@@ -144,7 +164,7 @@ class Relation(models.Model):
 
     class Meta:
         unique_together=(
-            ('from_user','to_user'),
+            ('from_user','to_user','relation_type'),
         )
 
     def __str__(self):
