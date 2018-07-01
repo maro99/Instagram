@@ -38,12 +38,20 @@
                 </div>
 
             {% endif %}
-
             <div >{{post.author.username}}</div>
-            <from method="POST" style = "display: inline-block;">
+
+            <form action="{% url 'members:follow-toggle' pk=post.author.pk %}" method="POST" style="display: inline-block;" >
                 {% csrf_token %}
-                <button type="submit" class = 'btn btn-outline-primary'>+Follow</button>
-            </from>
+
+                {% if post.author != user %}
+                    {% if post.author in user.following %}
+                        <button type="submit" class="btn btn-outline-primary btn-sm">- UnFollow</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-outline-primary btn-sm">+ Follow</button>
+                    {% endif %}
+                {% endif %}
+            </form>
+
             <!--<div><img width = "100%"src="/media/{{post.photo}}" alt=""></div>-->
             <!--하드코드 방식이라 좋지 않다. -->
             <!--settings.py에서 urls.py로 넘겨받은 prefix=settigns.MEDIA_URL을 기준으로 자동으로 만들어주고 싶다. -->

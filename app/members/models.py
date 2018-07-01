@@ -32,15 +32,14 @@ class User(AbstractUser):
         return self.username
 
     def follow(self, to_user):
-        if self.relations_by_from_user.filter(to_user=to_user).exists():
-            raise DuplicateRelationException(from_user=self, to_user=to_user, relation_type='follow')
+        # if self.relations_by_from_user.filter(to_user=to_user).exists(): # filter링한 결과가 QUueryset이라서 exist()쓰면 안될듯...이부분 고쳐야함.
+        #     raise DuplicateRelationException(from_user=self, to_user=to_user, relation_type='follow')
 
         return self.relations_by_from_user.create(
             to_user=to_user,
             relation_type=Relation.RELATION_TYPE_FOLLOW,
         )
 
-        return relation
 
     def unfollow(self,to_user):
         # 아래의 경우가 존재하면 실행

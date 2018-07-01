@@ -12,4 +12,6 @@ urlpatterns = [
 
     path('signup/', views.signup, name = 'signup'),
     path('withdraw/',views.withdraw, name='withdraw'),
+
+    path('<int:pk>/follow/',views.follow_toggle,name='follow-toggle'),
 ]
