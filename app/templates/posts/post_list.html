@@ -203,6 +203,7 @@
                 <p>{{ post.content }}</p>
 
 
+
                 <form action="{% url 'posts:post-delete' pk=post.pk %}" method='POST'>
                     {% csrf_token %}
                     <button type="submit">글 삭제</button>
