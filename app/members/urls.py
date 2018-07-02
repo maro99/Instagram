@@ -15,4 +15,5 @@ urlpatterns = [
 
     path('<int:pk>/follow/',views.follow_toggle,name='follow-toggle'),
     path('<int:pk>/block/', views.block_toggle, name='block-toggle'),
+    path('facebook-login/', views.facebook_login,name='facebook-login'),
 ]

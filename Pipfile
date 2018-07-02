@@ -8,6 +8,8 @@ django = "*"
 pillow = "*"
 ipython = "*"
 "psycopg2-binary" = "*"
+request = "*"
+requests = "*"
 
 [dev-packages]
 django-extensions = "*"
