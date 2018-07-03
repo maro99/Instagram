@@ -351,13 +351,30 @@ def block_toggle(request, pk):
     return redirect('index')
 
 
-def facebook_login(request):
-    # request의 GET에 온 'code'값을 HttpResponse로 보여주기
-    # 이 view와 url을 연결(주소는 redirect_url에 있는 주소)
 
-    # GET parameter의 'code에 값이 전달(authentication code)
-    # 전달받은 인증코드를 사용해서 엑세스토큰을 받음.
+
+#####################################facebook login관련 함수들.#############################
+
+
+def get_authentication_code(request):
+    # html의 a테그의 링크
+        # https://www.facebook.com/v3.0/dialog/oauth?
+		# client_id=166861210842547
+		# &redirect_uri=http://localhost:8000/members/facebook-login/
+		# &scope=email,public_profile" class="btn btn-primary
+
+    # 유저가 클릭하게 되면
+    # 서버에서는 facebook의 outh주소로 화면을 전환하고 권한을 묻는다.
+    # 권한을 수락하면 이 view와 url을 연결된 주소로 (redirect_url에 있는 주소) redirect된다.
+
+    # 이때 GET parameter의 'code에 값이 전달(authentication code)된다.
     code = request.GET.get('code')
+    return code
+
+
+# 전달받은 인증코드를 사용해서 엑세스토큰을 받음.(facebook의 access_token주소로 get요청통해서)
+def get_access_token(code):
+    # code = get_authentication_code(request)
     url = 'https://graph.facebook.com/v3.0/oauth/access_token'
 
     params = {
@@ -367,26 +384,23 @@ def facebook_login(request):
         'code':code,
     }
 
-    # 왼쪽 엑세스 코드교환 엔드포인터에 HTTP GET요청 후,
-    # 결과 response.text값을 HttpResponse에 출력.
-
-    # jason 반환됨.java script object nodtaion 자바스크립트에서 객체나타내기위한표기법
+    # 왼쪽 엑세스 코드교환 엔드포인터에 HTTP GET요청 하면
+    # jason 반환됨.(java script object nodtaion 자바스크립트에서 객체나타내기위한표기법)
     response = requests.get(url,params)
 
     # jason형식 택스트를  jason parser 이용해서 python 객체(object)로반환함.
     # response_dict = json.loads(response.text)
-    #위와 같은 결과
     response_dict = response.json()
-    print(response_dict)
 
     #여기서 access_token값만 꺼네서 HttpResponse로 출력.
     access_token = response_dict['access_token']
+    return access_token
 
-
-    # debug_token에 요청 보내고 결과 받기(받은 엑세스 토큰을 debug 결과에서 해당 토큰의 user_id(사용자 고유값) 가져올 수 있음.)
-    # 받은 결과의 'data'값을 HttpResponse로 출력.
-    # iput_token을 위의'access_token'
-    # access_token은 {client_id}|{client_secret} 값.
+# face북의 debug_token주소 에 요청 보내고 결과 받기(받은 엑세스 토큰을 debug 결과에서 해당 토큰의 user_id(사용자 고유값) 가져올 수 있음.)
+# iput_token을 위의'access_token'
+# access_token은 {client_id}|{client_secret} 값.
+def get_debug_token(access_token):
+    # access_token=get_access_token(request)
 
     url = 'https://graph.facebook.com/debug_token'
 
@@ -397,50 +411,47 @@ def facebook_login(request):
         )
     }
     response = requests.get(url, params)
+    return response
 
+# GraphAPI의 ,'me'(User) 를 이용해서  Facebook User정보 받아오기.
+def get_user_info_by_GrapicAPI(access_token):
+    # access_token=get_access_token(request)
+    url = 'https://graph.facebook.com/v3.0/me'
 
-
-
-    # GraphAPI의 ,'me'(User) 를 이용해서  Facebook User정보 받아오기.
-    url='https://graph.facebook.com/v3.0/me'
-
-    params={
+    # access_token과 가져올 유저 요소를 params에 담아서 get요청한다.
+    params = {
         'fields':
-            ','.join(['id','name','first_name','last_name','picture']),
+            ','.join(['id', 'name', 'first_name', 'last_name', 'picture']),
         'access_token': access_token,
     }
+    #get요청으로 받아온 janson형태 데이터를 parser로 python형태 dic 객체로반환한다.
     response = requests.get(url, params)
     response_dict = response.json()
+    return response_dict
 
-    # 받아온 정보 중 회원가입에 필요한 요소들 꺼내기
+
+def create_user(response_dict):
+    # 받아온 정보 dic 중 회원가입에 필요한 요소들 꺼내기
     facebook_user_id = response_dict['id']
-    first_name=response_dict['first_name']
-    last_name=response_dict['last_name']
+    first_name = response_dict['first_name']
+    last_name = response_dict['last_name']
     url_img_profile = response_dict['picture']['data']['url']
 
-    # 있으면 get없으면 create하고 True도 같이 반환.
+    #가져온 userid와 동인한 id있으면 get없으면 create하고 True도 같이 반환.
     user, user_created = User.objects.get_or_create(
-        username=facebook_user_id, #이값은 고유해서 get할때 사용 가능.
-        defaults={                 #이값은 고유하지 않아도됨. 입력되는 값.
-            'first_name':first_name,
-            'last_name':last_name,
+        username=facebook_user_id,  # 이값은 고유해서 get할때 사용 가능.
+        defaults={  # 이값은 고유하지 않아도됨. 입력되는 값.
+            'first_name': first_name,
+            'last_name': last_name,
         }
     )
+    return user
 
-    # # 유저가 새로 생성되었다면. ---------->위의 default값으로 한번에 해결 가능.
-    # if user_created:
-    #     user.first_name = first_name
-    #     user.last_name = last_name
-    #     user.save()
 
+def facebook_login(request):
+    code = get_authentication_code(request)
+    access_token = get_access_token(code)
+    response_dict =get_user_info_by_GrapicAPI(access_token)
+    user = create_user(response_dict)
     login(request, user)
-
-
-    # print(facebook_user_id)
-    # print(first_name)
-    # print(last_name)
-    # print(url_img_profile)
-
     return redirect('index')
-
-
