@@ -18,6 +18,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 TEMPLATE_DIR = os.path.join(BASE_DIR,'templates')
 
 AUTH_USER_MODEL = 'members.User'
+AUTHENTICATION_BACKENDS=[
+    'django.contrib.auth.backends.ModelBackend',
+    'members.backends.FacebookBackend',
+]
 
 LOGIN_URL = 'members:login'
 
