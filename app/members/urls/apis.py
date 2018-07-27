@@ -5,6 +5,6 @@ from members.apis import UserList
 app_name = 'members-api'
 
 urlpatterns =[
-    path('users/', UserList.as_view()),
+    path('', UserList.as_view()),
 
 ]

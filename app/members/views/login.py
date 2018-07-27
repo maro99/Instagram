@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
+from django.contrib.auth.backends import ModelBackend
 
 __all__=(
     'login_view',
@@ -37,7 +38,10 @@ def login_view(request):
             #login()함수를 실행한다.
             # session_id 값을  django_sessions테이블에 저장, 데이터는user와 연결됨
             # 이 함수 실행 후 돌려줄 HTTP Response에는 Set-Cookie헤더를 추가, 내용은 sessionid=<session값>
-            login(request, user)
+            # login(request=request, user=user,backend=ModelBackend) # 여기서 패북로긴인지, 그냥 로긴인지 분별해서 backend에 넣어줘야함.
+            login(request, user) # 여기서 패북로긴인지, 그냥 로긴인지 분별해서 backend에 넣어줘야함.
+
+
             #dlgn post-list로 redirect
 
             #GET parameter에 'next'값이 전달되면 해당 값으로 redirect
