@@ -22,17 +22,16 @@ from members.apis import UserList
 from posts.apis import PostList
 from .import views
 
-
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('posts/', include('posts.urls')),
-    path('members/',include('members.urls')),
+    path('posts/', include('posts.urls.views')),# 맞나?
+    path('members/',include('members.urls.views')), # 맞나?
     path('', views.index, name='index'),
 
-
-    path('api/posts/',PostList.as_view()),
-    path('api/users/', UserList.as_view())
+    path('api/',include('posts.urls.apis' )),  # 두개 합치면 앞에서만 찾고 실패시 뒤는 참조안함.
+    path('api/', include( 'members.urls.apis', ))
+    # path('api/posts/',PostList.as_view()),
+    # path('api/users/', UserList.as_view())
 
    # path('media/' )
 ] + static(
