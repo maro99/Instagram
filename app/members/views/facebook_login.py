@@ -11,10 +11,7 @@ __all__ =(
 User = get_user_model()
 
 
-
-
 def facebook_login(request):
-
     code = request.GET.get('code')
     user = authenticate(request, code=code)
 

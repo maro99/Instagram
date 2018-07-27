@@ -18,17 +18,28 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from members.apis import UserList
+from posts.apis import PostList
 from .import views
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('posts/', include('posts.urls')),
-
     path('members/',include('members.urls')),
     path('', views.index, name='index'),
+
+
+    path('api/posts/',PostList.as_view()),
+    path('api/users/', UserList.as_view())
 
    # path('media/' )
 ] + static(
     prefix= settings.MEDIA_URL,
     document_root = settings.MEDIA_ROOT,
 )
+
+
+#   3. config.urls에서 (posts.urls는 무시)
+#   /api/posts/가 위의 PostList.as_view()와 연결되도록 처리.

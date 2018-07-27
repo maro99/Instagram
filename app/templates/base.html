@@ -37,12 +37,12 @@
                 <div>
                     <img width="5%" src="{{user.img_profile.url}}" alt="">
                 </div>
-        {% else %}
-        <div>
-            <img width="8%" src="{% static '/images/blank_user.png' %}" alt="" class="rounded-circle">
-        </div>
+            {% else %}
+                <div>
+                    <img width="8%" src="{% static '/images/blank_user.png' %}" alt="" class="rounded-circle">
+                </div>
 
-        {% endif %}
+            {% endif %}
         <span>{{user}}로 로그인 중</span>
         <form action="{% url 'members:logout' %}" method="POST">
             {% csrf_token %}

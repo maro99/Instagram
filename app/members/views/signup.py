@@ -215,5 +215,3 @@ def signup_bak(request):
     # else:
     #     return render(request, 'members/signup.html')#@@@@@@@@@@@@@@@@@@@@@@@@
 
-
-

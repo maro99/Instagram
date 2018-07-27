@@ -58,6 +58,7 @@ INSTALLED_APPS = [
 
     'posts.apps.PostsConfig',
     'members.apps.MembersConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
