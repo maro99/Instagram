@@ -25,6 +25,45 @@ AUTHENTICATION_BACKENDS=[
 
 LOGIN_URL = 'members:login'
 
+
+# CORS
+
+CORS_ORIGIN_ALLOW_ALL=False
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3001',
+)
+
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+)
+
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
+
+from corsheaders.defaults import default_headers
+
+CORS_ALLOW_HEADERS = default_headers + (
+    'my-custom-header',
+)
+
+
+
+
 STATIC_DIR = os.path.join(BASE_DIR,'static')
 
 print(BASE_DIR)
@@ -59,6 +98,8 @@ INSTALLED_APPS = [
     'posts.apps.PostsConfig',
     'members.apps.MembersConfig',
     'rest_framework',
+
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +110,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 
 ]
 

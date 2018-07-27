@@ -11,6 +11,7 @@ ipython = "*"
 request = "*"
 requests = "*"
 djangorestframework = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 django-extensions = "*"
